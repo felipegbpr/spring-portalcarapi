@@ -40,4 +40,10 @@ public class BrandController {
         return ResponseEntity.ok().body(brandListDTO);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<BrandDTO> updateBrand(@Valid @PathVariable Long id, @RequestBody BrandDTO brandObjDTO) {
+        Brand newBrandObj = brandService.update(id, brandObjDTO);
+        return ResponseEntity.ok().body(new BrandDTO(newBrandObj));
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.eletroproject.portalcarapi.services;
 
+import com.eletroproject.portalcarapi.dto.BrandDTO;
 import com.eletroproject.portalcarapi.entities.Brand;
 import com.eletroproject.portalcarapi.repositories.BrandRepository;
 import com.eletroproject.portalcarapi.services.exceptions.ObjectNotFoundException;
@@ -27,6 +28,13 @@ public class BrandService {
         Optional<Brand> brandObj = repository.findById(id);
         return brandObj.orElseThrow(() -> new ObjectNotFoundException(
                 "Object was not found. Id: " + id + "Type: " + Brand.class.getName()));
+    }
+
+    public Brand update(Long id, BrandDTO brandObjDTO) {
+        Brand brandObj = findById(id);
+        brandObj.setName(brandObjDTO.getName());
+        brandObj.setCountry(brandObjDTO.getCountry());
+        return repository.save(brandObj);
     }
 
 }
