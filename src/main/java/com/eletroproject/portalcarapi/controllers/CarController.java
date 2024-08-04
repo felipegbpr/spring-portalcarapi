@@ -1,13 +1,11 @@
 package com.eletroproject.portalcarapi.controllers;
 
 import com.eletroproject.portalcarapi.dto.CarDTO;
-import com.eletroproject.portalcarapi.entities.Brand;
 import com.eletroproject.portalcarapi.entities.Car;
 import com.eletroproject.portalcarapi.services.CarService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -53,6 +51,24 @@ public class CarController {
 		List<Car> carList = carService.findAllByBrandId(brand_id);
 		List<CarDTO> carListDTO = carList.stream().map(carObj -> new CarDTO(carObj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(carListDTO);
+	}
+
+	@PutMapping("/{id}")
+	public ResponseEntity<Car> updateCar(@PathVariable Long id, @Valid @RequestBody Car carObj) {
+		Car newCarObj = carService.update(id, carObj);
+		return ResponseEntity.ok().body(newCarObj);
+	}
+
+	@PatchMapping("/{id}")
+	public ResponseEntity<Car> updatePatchCar(@PathVariable Long id, @Valid @RequestBody Car carObj) {
+		Car newCarObj = carService.update(id, carObj);
+		return ResponseEntity.ok().body(newCarObj);
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Car> delete(@PathVariable Long id) {
+		carService.delete(id);
+		return ResponseEntity.noContent().build();
 	}
 
 }

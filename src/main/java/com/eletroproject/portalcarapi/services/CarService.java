@@ -33,7 +33,7 @@ public class CarService {
 	public Car findById(Long id) {
 		Optional<Car> brandObj = repository.findById(id);
 		return brandObj.orElseThrow(() -> new ObjectNotFoundException(
-				"Object was not found. Id: " + id + "Type: " + Car.class.getName()));
+				"Object was not found. Id: " + id + " Type: " + Car.class.getName()));
 	}
 
 	public List<Car> findAllByBrandId(Long brand_id) {
@@ -41,4 +41,20 @@ public class CarService {
 		return repository.findAllByBrandId(brand_id);
 	}
 
+	public Car update(Long id, Car carObj) {
+		Car newCarObj = findById(id);
+		updateData(newCarObj, carObj);
+		return repository.save(newCarObj);
+	}
+
+	private void updateData(Car newCarObj, Car carObj) {
+		newCarObj.setName(carObj.getName());
+		newCarObj.setColor(carObj.getColor());
+		newCarObj.setModel(carObj.getModel());
+	}
+
+	public void delete(Long id) {
+		Car carObj = findById(id);
+		repository.delete(carObj);
+	}
 }

@@ -18,5 +18,9 @@ spring:
          web-allow-others: false
 springdoc:
   swagger-ui:
-    path: /swagger-ui.html  
+    path: /swagger-ui.html
+
+server:
+  error:
+    include-stacktrace: never
    

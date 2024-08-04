@@ -14,8 +14,6 @@ import org.hibernate.validator.constraints.Length;
 @NoArgsConstructor
 public class CarDTO {
 
-        private Long id;
-
         @NotEmpty(message = "Name is required.")
         @Length(min = 3, max = 100, message = "The NAME field must be between 3 and 100 characters long")
         private String name;
@@ -34,7 +32,6 @@ public class CarDTO {
 
         public CarDTO(Car carObj) {
                 super();
-                this.id = carObj.getId();
                 this.name = carObj.getName();
                 this.color = carObj.getColor();
                 this.model = carObj.getModel();
