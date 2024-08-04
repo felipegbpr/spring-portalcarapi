@@ -3,6 +3,7 @@ package com.eletroproject.portalcarapi.services;
 import com.eletroproject.portalcarapi.dto.BrandDTO;
 import com.eletroproject.portalcarapi.entities.Brand;
 import com.eletroproject.portalcarapi.repositories.BrandRepository;
+import com.eletroproject.portalcarapi.services.exceptions.DataIntegrityViolationException;
 import com.eletroproject.portalcarapi.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,7 +28,7 @@ public class BrandService {
 
         Optional<Brand> brandObj = repository.findById(id);
         return brandObj.orElseThrow(() -> new ObjectNotFoundException(
-                "Object was not found. Id: " + id + "Type: " + Brand.class.getName()));
+                "Object was not found. Id: " + id + " Type: " + Brand.class.getName()));
     }
 
     public Brand update(Long id, BrandDTO brandObjDTO) {
@@ -35,6 +36,16 @@ public class BrandService {
         brandObj.setName(brandObjDTO.getName());
         brandObj.setCountry(brandObjDTO.getCountry());
         return repository.save(brandObj);
+    }
+
+    public void delete(Long id) {
+        var brandObj = findById(id);
+
+        if (!brandObj.getCars().isEmpty()) {
+            throw new DataIntegrityViolationException("The brand cannot be erased! It has associated cars");
+        } else {
+            repository.deleteById(id);
+        }
     }
 
 }
