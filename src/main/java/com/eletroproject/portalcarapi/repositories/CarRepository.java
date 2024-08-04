@@ -11,5 +11,6 @@ import java.util.List;
 
 @Repository
 public interface CarRepository extends JpaRepository<Car, Long> {
-
+    @Query("SELECT c FROM Car c WHERE c.brand.id = :brand_id ORDER BY model")
+    List<Car> findAllByBrandId(@Param(value = "brand_id") Long brand_id);
 }

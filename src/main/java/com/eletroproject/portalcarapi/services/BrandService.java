@@ -26,7 +26,7 @@ public class BrandService {
 
         Optional<Brand> brandObj = repository.findById(id);
         return brandObj.orElseThrow(() -> new ObjectNotFoundException(
-                "Object is not found. Id: " + id + "Type: " + Brand.class.getName()));
+                "Object was not found. Id: " + id + "Type: " + Brand.class.getName()));
     }
 
 }

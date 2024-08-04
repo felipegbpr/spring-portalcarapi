@@ -34,12 +34,25 @@ public class CarController {
 			return ResponseEntity.created(uri).build();
 	}
 
-	@GetMapping()
-	public ResponseEntity<List<CarDTO>> getCars() {
+	@GetMapping("/all")
+	public ResponseEntity<List<CarDTO>> getAllCars() {
 		List<Car> carsList = carService.findAll();
 		List<CarDTO> carslistDTO = carsList.stream().map(carObj -> new CarDTO(carObj)).collect(Collectors.toList());
 
 		return ResponseEntity.ok().body(carslistDTO);
+	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<Car> getAllCars(@PathVariable Long id) {
+		Car carObj = carService.findById(id);
+		return ResponseEntity.ok().body(carObj);
+	}
+
+	@GetMapping
+	public ResponseEntity<List<CarDTO>> getAllCarsByBrand(@RequestParam(value = "brand", defaultValue = "0") Long brand_id) {
+		List<Car> carList = carService.findAllByBrandId(brand_id);
+		List<CarDTO> carListDTO = carList.stream().map(carObj -> new CarDTO(carObj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(carListDTO);
 	}
 
 }
