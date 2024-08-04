@@ -19,7 +19,7 @@ public class BrandService {
     }
 
     public List<Brand> findAll() {
-        return null;
+        return repository.findAll();
     }
 
     public Brand findById(Long id) {

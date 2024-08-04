@@ -18,4 +18,9 @@ public class BrandDTO {
         @Length(min = 3, max = 100, message = "The COUNTRY field must be between 3 and 100 characters long")
         private String country;
 
+        public BrandDTO(Brand brandObj) {
+                super();
+                this.name = brandObj.getName();
+                this.country = brandObj.getCountry();
+        }
 }
